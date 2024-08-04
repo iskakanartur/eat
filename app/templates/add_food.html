@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Food Entry</title>
+    <style>
+        body {
+            background-color: #333333;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            background-color: #444444;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        label, input, textarea {
+            display: block;
+            margin: 10px 0;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #555555;
+        }
+        button {
+            background-color: #6200ea;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+<body>
+    <form action="{{ url_for('main.add_food') }}" method="post">
+        <h2>Add Food Entry</h2>
+        <label for="dish">Dish:</label>
+        <input type="text" id="dish" name="dish" required>
+
+        <label for="ingredients">Ingredients:</label>
+        <textarea id="ingredients" name="ingredients" required></textarea>
+
+        <label for="grams">Grams:</label>
+        <input type="number" id="grams" name="grams" step="any" required>
+
+        <label for="calories">Calories:</label>
+        <input type="number" id="calories" name="calories" step="any" required>
+
+        <label for="meal">Meal:</label>
+        <input type="text" id="meal" name="meal" required>
+
+        <label for="portion">Portion:</label>
+        <input type="number" id="portion" name="portion" step="any" required>
+
+        <label for="portion_calories">Portion Calories:</label>
+        <input type="number" id="portion_calories" name="portion_calories" step="any" required>
+
+        <button type="submit">Add Food</button>
+        <button type="button" onclick="window.close()">Cancel</button>
+    </form>
+</body>
+</html>
