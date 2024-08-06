@@ -23,8 +23,9 @@ class Food(db.Model):
         self.portion_calories = self.dish_calories * (self.portion / 100)
 
     def calculate_daily_calories(self):
+        # Calculate total calories consumed for the same day
         total_daily_calories = db.session.query(db.func.sum(Food.portion_calories)).filter(
-            Food.date == self.date
+            db.func.date(Food.date) == self.date.date()
         ).scalar() or 0
         self.daily_calories_consumed = total_daily_calories + self.portion_calories
 

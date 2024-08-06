@@ -6,7 +6,6 @@ load_dotenv()  # Load environment variables from .env file
 class Config(object):
     DEBUG = False
     TESTING = False
-
     SECRET_KEY = os.environ.get('SECRET_KEY', 'you-will-never-guess')  # Fallback secret key
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')  # Expecting DATABASE_URL in .env
     SQLALCHEMY_TRACK_MODIFICATIONS = False

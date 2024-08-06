@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app import db
 from app.models import Food
+from datetime import datetime
 
 bp = Blueprint('main', __name__)
 
@@ -18,25 +19,26 @@ def add_food():
         calories = request.form.get('calories')
         meal = request.form.get('meal')
         portion = request.form.get('portion')
-        portion_calories = request.form.get('portion_calories')
 
         # Create a new Food instance
         new_food = Food(
+            date=datetime.utcnow(),  # Ensure date is set at creation time
             dish=dish,
             ingredients=ingredients,
             grams=float(grams),
             calories=float(calories),
             meal=meal,
-            portion=float(portion),
-            portion_calories=float(portion_calories)
+            portion=float(portion)
         )
 
-        # Calculate dish and daily calories before committing
+        # Calculate dish and portion calories
         new_food.calculate_dish_calories()
         new_food.calculate_portion_calories()
+
+        # Calculate daily calories before committing
         new_food.calculate_daily_calories()
 
-        # Add to database
+        # Add to database and commit
         db.session.add(new_food)
         db.session.commit()
 
