@@ -1,93 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Food Entries</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <style>
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding-top: 20px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: 1px solid #444;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #333;
-        }
-        tr:nth-child(even) {
-            background-color: #222;
-        }
-        .btn {
-            display: block;
-            width: 200px;
-            margin: 0 auto;
-            padding: 10px;
-            text-align: center;
-            background-color: #6200ea;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .btn:hover {
-            background-color: #3700b3;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Food Entries</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Dish</th>
-                    <th>Ingredients</th>
-                    <th>Grams</th>
-                    <th>Calories</th>
-                    <th>Dish Calories</th>
-                    <th>Meal</th>
-                    <th>Portion</th>
-                    <th>Portion Calories</th>
-                    <th>Daily Calories Consumed</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for food in foods %}
-                <tr>
-                    <td>{{ food.date.strftime('%Y-%m-%d') }}</td>
-                    <td>{{ food.dish }}</td>
-                    <td>{{ food.ingredients }}</td>
-                    <td>{{ food.grams }}</td>
-                    <td>{{ food.calories }}</td>
-                    <td>{{ food.dish_calories }}</td>
-                    <td>{{ food.meal }}</td>
-                    <td>{{ food.portion }}</td>
-                    <td>{{ food.portion_calories }}</td>
-                    <td>{{ food.daily_calories_consumed }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{{ url_for('main.index') }}" class="btn">Back to Home</a>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}View Food Entries{% endblock %}
+
+{% block content %}
+<h2>View Food Entries</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Dish</th>
+            <th>Ingredients</th>
+            <th>Grams</th>
+            <th>Calories</th>
+            <th>Dish Calories</th>
+            <th>Meal</th>
+            <th>Portion</th>
+            <th>Portion Calories</th>
+            <th>Daily Calories Consumed</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for food in foods %}
+            <tr>
+                <td>{{ food.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ food.dish }}</td>
+                <td>{{ food.ingredients }}</td>
+                <td>{{ food.grams }}</td>
+                <td>{{ food.calories }}</td>
+                <td>{{ food.dish_calories }}</td>
+                <td>{{ food.meal }}</td>
+                <td>{{ food.portion }}</td>
+                <td>{{ food.portion_calories }}</td>
+                <td>{{ food.daily_calories_consumed }}</td>
+                <td>
+                    <a href="{{ url_for('main.add_food', food_id=food.id) }}">Edit</a>
+                    <form action="{{ url_for('main.delete_food', food_id=food.id) }}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('main.add_food') }}">Add New Food</a>
+{% endblock %}
